@@ -1,0 +1,734 @@
+
+<HTML>
+<HEAD>
+
+  <TITLE>Life, Liberty, and the Pursuit of Happiness</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<H1> Fun with Statistics</H1>
+
+<p>I gathered statistics on different countries so I could look at the correlations 
+  between different things.
+<h2>Executive Summary</h2>
+<p>I attempted to investigate whether nine different national indices of freedom 
+  correlated positively with various national statistics that are somewhat reflective 
+  of protections for life, liberty, and the pursuit of happiness. I found that 
+  countries scoring high on most of the indices of freedom do have better statistics 
+  in these three areas. The indices of property rights, freedom from corruption 
+  and business freedom correlated most positively. The indices of limited government, 
+  gun rights, and freedom from taxes correlated weakly and in some cases negatively. 
+  I attempted a weighting of the various freedom indices to take all my analysis 
+  into account, and determined that I would rather move to Finland than North 
+  Korea.
+<h2>Background</h2>
+<p>I have had some discussions on-line about libertarianism. Libertarians are 
+  very sure that logic and reason are on their side and that life will be better 
+  if government just gets out of the way and lets private enterprise take care 
+  of everything. I'm not very ideological about who provides services in society 
+  as long as it works well. I do have concerns about any system that places far 
+  more value on one aspect of society (in this case, freedom) than on all the 
+  other things we value. Other one-directional systems have not worked very well 
+  in practice, however nice they might sound on paper. 
+<p>Unfortunately, the libertarians I have asked can't point to a country where 
+  their system has been tested out in real life. I can't look at the most libertarian 
+  country and poke around at what life is like there and decide if it's a good 
+  place to live, because no one can identify such a country. I don't believe in 
+  selecting a political system based on its theory - I live in Canada, which has 
+  been described as a country that "works in practice, but not in theory." I want 
+  to know how it will work, because otherwise it's like buying a pig in a poke. 
+<h2>What Did I Do?</h2>
+<p>There are some websites that attach numbers to freedom indices for different 
+  countries, so I can look at various kinds of freedom: business freedoms, freedom 
+  of speech, tax freedom, property rights, etc. I thought if I could match those 
+  various rating numbers against other national statistics, such as life expectancy 
+  or average income, I might be able to pick out some trends. </p>
+<p>In general, I'll break my discussion of results into three categories: life, 
+  liberty, and the pursuit of happiness. Under life, for example, I could look 
+  for a correlation between life expectancy in a country and its freedom of speech 
+  index. If I saw a statistically valid correlation with a positive slope, that 
+  would tell me that the average country with more freedom of speech has longer 
+  average life expectancy. There are a couple of general caveats:</p>
+<ul>
+  <li>No causality is implied. From these statistics I cannot make any claim about 
+    whether more freedom of speech results in longer life expectancy or whether 
+    longer life expectancy results in more freedom of speech. I can only say whether 
+    or not there is a correlation. </li>
+  <li>I did not use time series data. These are just recent snapshots of each 
+    country. That means I cannot make any claims about a change in freedom of 
+    speech in a given country likely being accompanied by a corresponding change 
+    in life expectancy. </li>
+</ul>
+<p>If there is a positive, statistically valid correlation, however, I can say 
+  that if you move from your country to one with a higher score on the freedom 
+  of speech index, you will most likely be moving to a country with longer average 
+  life expectancy. </p>
+<h2>The Freedom Indices</h2>
+<p>I went looking for a source of numerical values for several freedom indices 
+  for many countries that I could easily download into Excel. I also wanted the 
+  source to be an organization that appeared to be libertarian in nature. I wanted 
+  to investigate their claims, so I thought it would be good to use a source in 
+  which they would have confidence. I think I found such a source at FreeExistence.org, 
+  on this page: <A HREF="http://www.freeexistence.org/freedom.shtml">http://www.freeexistence.org/freedom.shtml</A>. FreeExistence.org 
+  provides number ratings between 0 and 100 for the following nine indices: </p>
+<ul>
+  <li>Property rights </li>
+  <li>Drug rights </li>
+  <li>Freedom from taxes </li>
+  <li>Freedom from corruption </li>
+  <li>Freedom of expression </li>
+  <li>Freedom from inflation </li>
+  <li>Limited government </li>
+  <li>Business freedom </li>
+  <li>Gun rights </li>
+</ul>
+<p>Of these, the one that made me really curious was the Index of Limited Government. 
+  The creator of the FreeExistence website had no information on where that index 
+  came from, and there is no email address on the site for posing questions. If 
+  you read further, you'll see that this index gives very different results from 
+  most of the other ones, so it became important to figure out what it was based 
+  on. I recently downloaded country-by-country data on government spending as 
+  a percentage of GDP and compared it against this Index of Limited Government. 
+  Plotting them against each other, I got a curve so nearly perfect that it is 
+  clear to me that's what this index is. The formula is:</p>
+<p>Freedom Index = 99.645 + 0.0237 x (Govt Spending %) - 0.0303 x (Govt Spending 
+  %)<sup>2</sup></p>
+<p>The R squared value of this correlation is 0.9998. That qualifies as a slam 
+  dunk in my books. This makes it possible to plot the other statistics I was 
+  interested in against the government spending percentage itself, rather than 
+  against the Index of Limited Government. I think that makes it more meaningful. 
+  I will add notes [in square brackets] to that effect in each of the discussions 
+  below.</p>
+<h2>The Rest of the Data</h2>
+<p>For the other statistics I was interested in, I mostly downloaded data from 
+  Wikipedia. These are not necessarily the highest quality sources of data, but 
+  this is just a curiosity project, not an academic study. If someone wants to 
+  do a more rigorous analysis, that would be good. If someone has already done 
+  a better analysis of this sort, I would be interested in seeing how their results 
+  differ from mine.</p>
+<h2>The Results: Life</h2>
+<p>In the life category, I looked at infant mortality, life expectancy, murder 
+  rates, and suicide rates. I consider lower infant mortality, longer life expectancy, 
+  lower murder rates, and lower suicide rates to be the desirable direction. </p>
+<p>This is what I found for correlations between the freedom indices and infant 
+  mortality. These are in descending order of the strength of the correlation. 
+  On average, a country scoring 10 points higher on the index of: </p>
+<ul>
+  <li>Property rights has 5.9 fewer infant deaths per 1000 live births, with 99% 
+    confidence that this is a statistically valid correlation </li>
+  <li>Freedom from corruption has 5.8 fewer infant deaths per 1000 live births, 
+    with 99% confidence that this is a statistically valid correlation </li>
+  <li>Freedom of expression has 4.5 fewer infant deaths per 1000 live births, 
+    with 99% confidence that this is a statistically valid correlation </li>
+  <li>Business freedom has 4.6 fewer infant deaths per 1000 live births, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>Drug rights has 6.3 fewer infant deaths per 1000 live births, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Limited government has 2.5 <b>more</b> infant deaths per 1000 live births, 
+    with 99% confidence that this is a statistically valid correlation </li>
+  <li>[A country where government spending is a 10% larger share of GDP has 3.9 
+    fewer infant deaths per 1000 live births, with 99% confidence that this is 
+    a statistically valid correlation.]</li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    infant mortality. </li>
+</ul>
+<p>This is what I found for correlations between the freedom indices and life 
+  expectancy. These are in descending order of the strength of the correlation. 
+  On average, in a country scoring 10 points higher on the index of: </p>
+<ul>
+  <li> Property rights, people live an average of 2.5 years longer, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Freedom from corruption, people live an average of 2.5 years longer, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>Business freedom, people live an average of 2.5 years longer, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Freedom of expression, people live an average of 1.4 years longer, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>Freedom of expression, people live an average of 1.7 years longer, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>Drug rights, people live an average of 1.9 years longer, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Limited government, people live an average of 0.7 years <b>less</b>, with 
+    98% confidence that this is a statistically valid correlation </li>
+  <li>[In a country where government spending is a 10% larger share of GDP, people 
+    live an average of 2.3 years longer, with 99% confidence that this is a statistically 
+    valid correlation.]</li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    life expectancy. </li>
+</ul>
+<p>This is what I found for correlations between the freedom indices and murder 
+  rates. These are in descending order of the strength of the correlation. On 
+  average, a country scoring 10 points higher on the index of: </p>
+<ul>
+  <li> Freedom from corruption has 3.1 fewer murders per 100,000 people, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>Property rights has 2.4 fewer murders per 100,000 people, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Limited government has 2.0 <b>more</b> murders per 100,000 people, with 
+    95% confidence that this is a statistically valid correlation </li>
+  <li>[A country where government spending is a 10% larger share of GDP has 4.4 
+    fewer murders per 100,000 population, with 95% confidence that this is a statistically 
+    valid correlation.]</li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    murder rates. I found it interesting that the index with the weakest correlation 
+    to murder rates of the nine was gun rights. </li>
+</ul>
+<p>This is what I found for correlations between the freedom indices and suicide 
+  rates. These are in descending order of the strength of the correlation. On 
+  average, a country scoring 10 points higher on the index of: </p>
+<ul>
+  <li> Freedom from corruption has 0.9 <b>more</b> suicides per 100,000 people, 
+    with 99% confidence that this is a statistically valid correlation </li>
+  <li>Property rights has 0.8 <b>more</b> suicides per 100,000 people, with 99% 
+    confidence that this is a statistically valid correlation </li>
+  <li>Business freedom has 0.8 <b>more</b> suicides per 100,000 people, with 95% 
+    confidence that this is a statistically valid correlation </li>
+  <li>Limited government has 0.6 fewer suicides per 100,000 people, with 95% confidence 
+    that this is a statistically valid correlation </li>
+  <li>[A country where government spending is a 10% larger share of GDP has 2.0 
+    more suicides per 100,000 population, with 99% confidence that this is a statistically 
+    valid correlation.]</li>
+  <li>Freedom from inflation has 1.0 <b>more</b> suicides per 100,000 people, 
+    with 90% confidence that this is a statistically valid correlation </li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    suicide rates. Again, I found it interesting that the index with the weakest 
+    correlation to suicide rates of the nine was gun rights. </li>
+</ul>
+<p>For most of the freedom indices, if you move to a country with a higher freedom 
+  index, you will be moving to a country with lower infant mortality, longer life 
+  expectancy, lower murder rates, and higher suicide rates. The one exception 
+  is the index of limited government. If you move to a country with a higher score 
+  on the limited government index [i.e., where government spending is a lower 
+  percentage of GDP], you will on average be moving to a place with higher infant 
+  mortality, lower life expectancy, higher murder rates, and lower suicide rates. 
+</p>
+<h2>The Results: Liberty</h2>
+<p>In the liberty category, I mainly looked at cross-tabulations between the nine 
+  freedom indices. In addition, I looked at incarceration rates. </p>
+<p>The cross-tabulations between the freedom indices showed that most of them 
+  are positively correlated with each other, some of them very strongly. A few 
+  pairs of indices have no statistically significant correlation, and one pair, 
+  limited government and freedom of expression, are negatively correlated. The 
+  following table shows the relationships between the nine indices. In this chart, 
+  a cell indicates the average number of points the index at the left will change 
+  if the index at the top increases by 10. For example, if one country's freedom 
+  from corruption is 10 points higher than another country's, the first country's 
+  property rights index will on average be 9.6 points higher. If a country's limited 
+  government index is 10 points higher, its freedom of expression index will on 
+  average be 1.8 points lower. </p>
+<table width="75%" border="1">
+  <tr> 
+    <th></th>
+    <th> 
+      <div align="center"><b>Business</b></div>
+    </th>
+    <th> 
+      <div align="center"><b>Inflation</b></div>
+    </th>
+    <th> 
+      <div align="center"><b>Property</b></div>
+    </th>
+    <th> 
+      <div align="center"><b>Taxes</b></div>
+    
+    <th> 
+      <div align="center"><b>Corruption</b></div>
+    </th>
+    <th> 
+      <div align="center"><b>Ltd Govt</b></div>
+    </th>
+    <th> 
+      <div align="center"><b>Expression</b></div>
+    </th>
+    <th> 
+      <div align="center"><b>Drugs</b></div>
+    </th>
+    <th> 
+      <div align="center"><b>Guns</b></div>
+    </th>
+  </tr>
+  <tr> 
+    <th><b>Business</b></th>
+    <td> 
+      
+    </td>
+    <td> 
+      <div align="center"><b>8.9</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>7.8</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>6.3</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>7.3</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>3.1</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>2.7</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>4.8</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>3.4</b></div>
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Inflation</b></th>
+    <td> 
+      <div align="center"><b>7.1</b></div>
+    </td>
+    <td> 
+      
+    </td>
+    <td> 
+      <div align="center"><b>5.4</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>7.4</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>4.8</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>4.6</b></div>
+    </td>
+    <td> 
+      <div align="center"><font color="#00FF40"><b>1.2</b></font></div>
+    </td>
+    <td> 
+      <div align="center"><font color="#00FF40"><b>2.7</b></font></div>
+    </td>
+    <td> 
+      <div align="center"><b>2.9</b></div>
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Property</b></th>
+    <td> 
+      <div align="center"><b>8.0</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>7.0</b></div>
+    </td>
+    <td> 
+      
+    </td>
+    <td> 
+      <div align="center"><b>3.3</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>9.6</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#8000FF">1.2</font></b></div>
+    </td>
+    <td> 
+      <div align="center"><b>4.4</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>7.1</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#8000FF">1.9</font></b></div>
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Taxes</b></th>
+    <td> 
+      <div align="center"><b>6.2</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>9.0</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>3.1</b></div>
+    </td>
+    <td> 
+      
+    </td>
+    <td> 
+      <div align="center"><b>2.3</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>6.1</b></div>
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td> 
+      <div align="center"><b>2.7</b></div>
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Corruption</b></th>
+    <td> 
+      <div align="center"><b>6.1</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>5.0</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>7.7</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>1.9</b></div>
+    </td>
+    <td> 
+      
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td> 
+      <div align="center"><b>2.6</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>5.0</b></div>
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Ltd Govt</b></th>
+    <td> 
+      <div align="center"><b>4.1</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>7.6</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#8000FF">0.2</font></b></div>
+    </td>
+    <td> 
+      <div align="center"><b>8.2</b></div>
+    </td>
+    <td> 
+      <div align="center">&nbsp;</div>
+    </td>
+    <td> 
+      
+    </td>
+    <td> 
+      <div align="center"><b><font color="#FF0000">-2.1</font></b></div>
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Expression</b></th>
+    <td> 
+      <div align="center"><b>3.2</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#00FF40">1.8</font></b></div>
+    </td>
+    <td> 
+      <div align="center"><b>5.0</b></div>
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td> 
+      <div align="center"><b>3.7</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#FF0000">-1.8</font></b></div>
+    </td>
+    <td> 
+   
+    </td>
+    <td> 
+      <div align="center"><b>9.6</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>4.1</b></div>
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Drugs</b></th>
+    <td> 
+      <div align="center"><b>1.3</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#00FF40">0.9</font></b></div>
+    </td>
+    <td> 
+      <div align="center"><b>1.9</b></div>
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td> 
+      <div align="center"><b>1.7</b></div>
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td> 
+      <div align="center"><b>2.2</b></div>
+    </td>
+    <td> 
+      
+    </td>
+    <td> 
+      <div align="center"><b><font color="#8000FF">1.0</font></b></div>
+    </td>
+  </tr>
+  <tr> 
+    <th><b>Guns</b></th>
+    <td> 
+      <div align="center"><b>1.5</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>1.7</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#8000FF">0.9</font></b></div>
+    </td>
+    <td> 
+      <div align="center"><b>1.3</b></div>
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td>&nbsp; 
+      
+    </td>
+    <td> 
+      <div align="center"><b>1.6</b></div>
+    </td>
+    <td> 
+      <div align="center"><b><font color="#8000FF">1.7</font></b></div>
+    </td>
+    <td> 
+       
+    </td>
+  </tr>
+</table>
+<p>The table is arranged so that the indices with the strongest correlations to 
+  the other eight are generally found towards the top left and the ones that correlate 
+  the most weakly are generally to the bottom right. If the number in the table 
+  is black, the correlation is statistically significant with at least 99% confidence. 
+  If the number is green, the correlation is statistically significant with at 
+  least 95% confidence. If the number is purple, the correlation is statistically 
+  significant with at least 90% confidence. Red is used to show a negative correlation 
+  - in both cases these are statistically significant with confidence of at least 
+  99%. If the cell is empty, there is no statistically significant correlation. 
+  Cells on the diagonal are blanked out, because an index's correlation with itself 
+  is trivial. [I didn't look at the relationship between government spending as 
+  a percentage of GDP and these other indices, because I was primarily interested 
+  in how they relate to each other.]</p>
+<p>This is what I found for correlations between the freedom indices and incarceration 
+  rates. On average, a country scoring 10 points higher on the index of business 
+  freedom has 7.7 <b>more</b> prisoners per 100,000 people, with 95% confidence 
+  that this is a statistically valid correlation. None of the other freedom indices 
+  had statistically valid correlations with incarceration rates [including government 
+  spending]. </p>
+<p>It appears that incarceration rate is not very indicative of the influence 
+  of these indices of freedom on "liberty" since it has only a weak correlation 
+  with just one of the indices. The correlations between the indices seem more 
+  useful. Based on the table above, the business freedom index seems to be the 
+  best "bellwether" indicating whether a country is likely to score well on the 
+  indices of the other freedoms. Gun rights seems to be the least predictive, 
+  having weak or no correlation with half of the other indices. </p>
+<h2>The Results: The Pursuit of Happiness</h2>
+<p>I wasn't sure how best to define the pursuit of happiness. There is a Global 
+  Barometer of Happiness, based on interviews of nearly 53,000 people in 58 countries 
+  by Leger Marketing. As mentioned below, I found only weak correlations with 
+  two of the indices of freedom and no statistically significant correlation with 
+  any of the others. Moreover, happiness is not the same as the pursuit of happiness. 
+  I'm not sure quite what is required to pursue happiness, but I looked at some 
+  things that might influence people's ability to go after the things they want: 
+  average income (based on purchasing power parity), income inequality (the Gini 
+  coefficient), and the Human Development Index, which is a composite of life 
+  expectancy, literacy, education and standards of living. </p>
+<p>This is what I found for correlations between the freedom indices and the Global 
+  Barometer of Happiness. These are in descending order of the strength of the 
+  correlation. On average, a country scoring 10 points higher on the index of: 
+</p>
+<ul>
+  <li> Property rights scores 1.7 points higher on the Global Barometer of Happiness, 
+    with 90% confidence that this is a statistically valid correlation </li>
+  <li>Business freedom scores 2.3 points higher on the Global Barometer of Happiness, 
+    with 90% confidence that this is a statistically valid correlation </li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    the Global Barometer of Happiness. </li>
+</ul>
+<p>This is what I found for correlations between the freedom indices and per capita 
+  income (based on purchasing power parity). These are in descending order of 
+  the strength of the correlation. On average, in a country scoring 10 points 
+  higher on the index of: </p>
+<ul>
+  <li> Freedom from corruption, people have average incomes $5,100 higher, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>Property rights, people have average incomes $4,200 higher, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Business freedom, people have average incomes $3,100 higher, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Freedom of expression, people have average incomes $1,900 higher, with 99% 
+    confidence that this is a statistically valid correlation </li>
+  <li>Drug rights, people have average incomes $2,600 higher, with 99% confidence 
+    that this is a statistically valid correlation </li>
+  <li>Limited government, people have average incomes $1,300 <b>lower</b>, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>[In acountry where government spending is a 10% larger share of GDP, people 
+    have average incomes $2,100 higher, with 99% confidence that this is a statistically 
+    valid correlation.]</li>
+  <li>Freedom from inflation, people have average incomes $1,400 higher, with 
+    95% confidence that this is a statistically valid correlation </li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    average income. </li>
+</ul>
+<p>This is what I found for correlations between the freedom indices and income 
+  inequality (based on the Gini coefficient). A higher Gini coefficient would 
+  indicate that the wealthy have incomes farther above the average income than 
+  in other countries. A lower Gini coefficient would indicate that the poor are 
+  not as far below the average income as in other countries. Thus, it is less 
+  a measure of the overall ability to pursue happiness within a society as it 
+  is a measure of who can pursue happiness within the society more easily. The 
+  relationships below are in descending order of the strength of the correlation. 
+  On average, a country scoring 10 points higher on the index of: </p>
+<ul>
+  <li> Limited government would score 1.7 points higher on the Gini index, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>[A country where government spending is a 10% larger share of GDP would 
+    score 2.3 points lower on the Gini index, with 99% confidence that this is 
+    a statistically valid correlation.]</li>
+  <li>Freedom from corruption would score 1.3 points lower on the Gini index, 
+    with 99% confidence that this is a statistically valid correlation </li>
+  <li>Property rights would score 1.1 points lower on the Gini index, with 99% 
+    confidence that this is a statistically valid correlation </li>
+  <li>Freedom from taxes would score 1.3 points higher on the Gini index, with 
+    98% confidence that this is a statistically valid correlation </li>
+  <li>Business freedom would score 1.0 points lower on the Gini index, with 98% 
+    confidence that this is a statistically valid correlation </li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    average income. </li>
+</ul>
+<p>This is what I found for correlations between the freedom indices and the Human 
+  Development Index. These are in descending order of the strength of the correlation. 
+  On average, a country scoring 10 points higher on the index of: </p>
+<ul>
+  <li> Property rights scores 4.1 points higher on the Human Development Index, 
+    with 99% confidence that this is a statistically valid correlation </li>
+  <li>Freedom from corruption scores 4.3 points higher on the Human Development 
+    Index, with 99% confidence that this is a statistically valid correlation 
+  </li>
+  <li>Business freedom scores 3.6 points higher on the Human Development Index, 
+    with 99% confidence that this is a statistically valid correlation </li>
+  <li>Freedom of expression scores 2.9 points higher on the Human Development 
+    Index, with 99% confidence that this is a statistically valid correlation 
+  </li>
+  <li>Limited government scores 2.1 points <b>lower</b> on the Human Development 
+    Index, with 99% confidence that this is a statistically valid correlation 
+  </li>
+  <li>[A country where government spending is a 10% larger share of GDP scores 
+    2.9 points higher on the Human Development Index, with 99% confidence that 
+    this is a statistically valid correlation.] </li>
+  <li>Drug rights scores 4.2 points higher on the Human Development Index, with 
+    99% confidence that this is a statistically valid correlation </li>
+  <li>The remaining indices do not have statistically valid correlations with 
+    average income. </li>
+</ul>
+<p>For most of the freedom indices, they have little or no statistically valid 
+  correlation to the Barometer of Happiness, but they do have correlations with 
+  the other three values under pursuit of happiness. If you move to a country 
+  with a higher freedom index, you will be moving to a country with higher average 
+  income and a higher score on the Human Development Index. The exception to this 
+  is limited government. If you move to a country with a higher score on the limited 
+  government index [i.e., where government spending is a lower percentage of GDP], 
+  you will on average move to a country with lower average income and a lower 
+  Human Development score. The Gini index is positively correlated with some indices 
+  (limited government and tax freedom) and negatively correlated with others (freedom 
+  from corruption, property rights, and business freedom). </p>
+<h2>Conclusions</h2>
+<p>Most of the indices of freedom correlate positively with a society's ability 
+  to foster life, liberty, and the pursuit of happiness, based on the national 
+  statistics I examined. The exceptions are: the index of limited government, 
+  which appears to be correlated with decreasing ability to protect both life 
+  and the pursuit of happiness; and freedom from taxes and gun rights, which are 
+  both apparently correlated with a decreasing ability to protect the pursuit 
+  of happiness. Shuffling all these correlations together is a fairly arbitrary 
+  process, very dependent on your personal values. I have made an attempt, combining 
+  the strength (r value) of the correlations in each category and then weighting 
+  each of the three categories equally. In order from most to least positively 
+  correlated with these three categories, the nine indices fall in the following 
+  order: </p>
+<ul>
+  <li> Property rights </li>
+  <li>Freedom from corruption </li>
+  <li>Business freedom </li>
+  <li>Freedom from inflation </li>
+  <li>Freedom of expression </li>
+  <li>Drug rights </li>
+  <li>Freedom from taxes </li>
+  <li>Gun rights </li>
+  <li>Limited government </li>
+</ul>
+<p>If I weight the nine indices according to this pattern and rank countries according 
+  to a composite index of freedom, the top 10 countries in the dataset are as 
+  follows: Finland, New Zealand, Denmark, Netherlands, Canada, Australia, Sweden, 
+  Germany, Iceland, and Ireland. The next 10 are mainly in Western Europe, with 
+  the exception of Hong Kong, Singapore, and Barbados. The United States places 
+  21st. The bottom countries include quite a few for which the indices are not 
+  available due to lack of data. The bottom five are: North Korea, Somalia, Sudan, 
+  Afghanistan, and Iraq. If we exclude countries for which various indices are 
+  missing, the bottom five are: Burma, Eritrea, Libya, Turkmenistan, and Democratic 
+  Republic of Congo. </p>
+<h2>A Few Notes on the Statistical Analysis</h2>
+<p>I am not a professional statistician, though I use statistics in my work. I 
+  did this analysis in Excel, because (as my friends will attest) I use Excel 
+  for all kinds of things from tracking my investments to timing the cooking of 
+  a ham. I would be interested in seeing this analysis done more rigorously by 
+  someone who really knows what they're doing. </p>
+<p>To obtain my correlations, I plotted the indices of freedom against the other 
+  statistics in Excel and let Excel's built-in regression system find the best 
+  linear equation and calculate the r-squared value. In many cases, a different 
+  shape of curve might have offered a higher r-squared value than a straight line, 
+  but I wanted to keep things simple so I didn't pursue that. To test the statistical 
+  validity of an r value, I used a table from the appendix of <i>Statistical Methods, 
+  Seventh Edition</i>, 1980, by George Snedecor & William Cochrane. The table 
+  was originally from <i>Statistical Methods for Research Workers</i>, 1925, by 
+  R.A. Fisher. 1925! We stand on the shoulders of giants. </p>
+<p>If I wanted to push this analysis further, Snedecor & Cochrane describe how 
+  to estimate the expected distribution of the y-variable for a given value of 
+  x in a correlation like this. That would enable me to, for example, estimate 
+  the variance for the life expectancy in countries with a freedom of expression 
+  index value of 60. In theory, then, if you lived in a country whose freedom 
+  of expression index was 50, you could estimate the odds that average life expectancy 
+  would increase if you moved to one with an index of 60. It seemed like too much 
+  work, so I didn't go there. </p>
+<p>The major thing missing from this analysis is time series data. I can talk 
+  about how countries compare with each other, but I can't talk about how a given 
+  country changes with time. In five years, presumably many of the freedom indices 
+  and many of the other statistics will change. At that point, just as an example, 
+  I could plot change in life expectancy versus change in the index of freedom 
+  of expression. That would permit a discussion of what societal changes tend 
+  to go together and which ones go in opposite directions. </p>
+<p>
+<p>
+<p>
+<P>
+  <HR>
+<A HREF="dave.html"><IMG SRC="color_up.gif" ALIGN=middle> Dave's Page</A>
+<P>
+<A HREF="index.html"><IMG SRC="house.gif" ALIGN=middle> Home </A> 
+  <HR>
+<ADDRESS> Last Updated: 11 January 2012<BR>
+  WebMaster: Dave Shipley
+  &nbsp;<A HREF="mailto:urbship@magma.ca">urbship@magma.ca</A><BR>
+&copy; copyright 2012 David Urban Shipley </ADDRESS>
+</BODY></HTML>
+
