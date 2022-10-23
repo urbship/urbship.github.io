@@ -1,0 +1,954 @@
+<HTML>
+<HEAD>
+<TITLE>Furnace Replacement Calculator</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+function testResults (form) {
+	var OldGasCost=0.;
+	var OldGasConsumption=0.;
+	var OldGasHeatPercent=100.;
+	var OldGasHeatConsumption=0.;
+	var OldEnergyCons=0.;
+	var OldElecCons=0.;
+	var OldOpCost=0.;
+	var OldEff=83.;
+	var OldLife=18.;
+	var OldAge=6.;
+	var OldRemain=1.;
+	var OldCost=2000.;
+	var ElecGHGFactor=0.236;
+	var OldGHGEmissions=0.;
+	var NewEff=94.;
+	var NewEnergyCons=0.;
+	var NewGasCons=0.;
+	var NewElecCons=0.;
+	var NewOpCost=0.;
+	var NewCost=0.;
+	var GasGHGFactor=0.04968;
+	var NewGHGEmissions=0.;
+	var GHGSavings=0.;
+	var SalesTaxRate=0.;
+	var SalesTaxPercent=0.;
+	var SalesTaxCost=0.;
+	var NewCapCost=0.;
+	var AuditCost=0.;
+	var MftrRebate=0.;
+	var OPARebate=0.;
+	var UtilityRebate=0.;
+	var FedRebate=0.;
+	var ProvRebate=0.;
+	var TotalRebates=0.;
+	var TotalConsumerCost=0.;
+	var RecoverableCost=0.;
+	var EnergyCostSavings=0.;
+	var InitialPayback=0.;
+	var FinalPayback=0.;
+	var LifetimeFactor=0.;
+	var PreLifeFactor=0.;
+	var PostLifeFactor=0.;
+	var NewPresentValue=0.;
+	var OldPresentValue=0.;
+	var GasPrice=0.46;
+	var ElecPrice=0.1;
+	var MARRval=5.;
+	var MARRPercent = 0.05;
+	var TimeHorizon=5.;
+	var SigDiff=1.;
+	var ErrCode=0;
+// Make sure ErrCode is zero at the start	
+	ErrCode=0;
+		
+// Parse Gas Price	
+    TestVar = isNumberString (form.Gas_Price.value)
+    if (TestVar == 1) {
+       GasPrice = form.Gas_Price.value;
+	   if (GasPrice == 0) {
+	       alert ("Zero gas price causes problems. Arbitrarily setting it to 0.5.");
+		   GasPrice = 0.5;
+	   }   
+    }   
+    else  {
+        alert ("Your gas price is not a number.");
+		ErrCode=ErrCode + 1;
+	}
+
+// Parse Electric Price	
+    TestVar = isNumberString (form.Elec_Price.value)
+    if (TestVar == 1) {
+       ElecPrice = form.Elec_Price.value;
+	   if (ElecPrice == 0) {
+	       alert ("Zero electricity price causes problems. Arbitrarily setting it to 0.1.");
+		   ElecPrice = 0.1;
+	   }   
+    }   
+    else  {
+        alert ("Your electricity price is not a number.");
+		ErrCode=ErrCode + 1;
+	}
+
+// Parse MARR	
+    TestVar = isNumberString (form.MARR.value)
+    if (TestVar == 1) {
+       MARRval = form.MARR.value;
+	   if (MARRval == 0) {
+	       alert ("Zero MARR causes problems. Arbitrarily setting it to 5.");
+		   MARR = 5.;
+	   }   
+    }   
+    else  {
+        alert ("Your MARR is not a number.");
+		ErrCode=ErrCode + 1;
+	}
+	
+// Parse Time Horizon	
+    TestVar = isNumberString (form.Horizon.value)
+    if (TestVar == 1) {
+       TimeHorizon = form.Horizon.value;
+	   if (TimeHorizon == 0) {
+	       alert ("Zero horizon causes problems. Arbitrarily setting it to 5.");
+		   TimeHorizon = 5.;
+	   }   
+    }   
+    else  {
+        alert ("Your time horizon is not a number.");
+		ErrCode=ErrCode + 1;
+	}
+
+// Parse Significant Difference	
+    TestVar = isNumberString (form.Difference.value)
+    if (TestVar == 1) {
+       SigDiff = form.Difference.value;
+	   if (SigDiff == 0) {
+	       alert ("Zero significant difference causes problems. Arbitrarily setting it to 1.");
+		   TimeHorizon = 1.;
+	   }   
+    }   
+    else  {
+        alert ("Your minimum difference is not a number.");
+		ErrCode=ErrCode + 1;
+	}
+
+// Parse Old Gas Cost	
+    TestVar = isNumberString (form.OldGas_Cost.value)
+    if (TestVar == 1)
+          OldGasCost = form.OldGas_Cost.value;
+    else {
+        alert ("Your annual cost of gas is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+	
+// Parse Percentage of Gas Used for Heat	
+    TestVar = isNumberString (form.OldGas_Percent.value)
+    if (TestVar == 1)
+          OldGasHeatPercent = form.OldGas_Percent.value;
+    else {
+        alert ("Your percent of gas used for heat is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+
+// Parse Electricity Consumption	
+    TestVar = isNumberString (form.Elec_Cons.value)
+    if (TestVar == 1)
+          OldElecCons = form.Elec_Cons.value;
+    else {
+        alert ("Your annual electricity consumption is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+
+// Parse Efficiency	
+    TestVar = isNumberString (form.Old_Eff.value)
+    if (TestVar == 1) {
+          OldEff = form.Old_Eff.value;
+		  if (OldEff == 0) {
+	         alert ("Zero efficiency causes problems. Arbitrarily setting it to 83.");
+		     OldEff = 83.;
+	   }  
+	}	  
+    else {
+        alert ("Your efficiency is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+	
+// Parse Old Life	
+    TestVar = isNumberString (form.Old_Life.value)
+    if (TestVar == 1) {
+       OldLife = form.Old_Life.value;
+	   if (OldLife == 0) {
+	       alert ("Zero equipment life causes problems. Arbitrarily setting it to 18.");
+		   TimeHorizon = 18.;
+	   }   
+    }   
+    else  {
+        alert ("Your estimated life expectancy is not a number.");
+		ErrCode=ErrCode + 1;
+	}
+	
+// Parse Furnace Age	
+    TestVar = isNumberString (form.Old_Age.value)
+    if (TestVar == 1)
+          OldAge = form.Old_Age.value;
+    else {
+        alert ("Your furnace age is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+	
+// Parse Original Cost	
+    TestVar = isNumberString (form.Old_Cost.value)
+    if (TestVar == 1)
+          OldCost = form.Old_Cost.value;
+    else {
+        alert ("Your original furnace cost is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+
+// Parse Efficiency	
+    TestVar = isNumberString (form.New_Eff.value)
+    if (TestVar == 1) {
+          NewEff = form.New_Eff.value;
+		  if (NewEff == 0) {
+	         alert ("Zero efficiency causes problems. Arbitrarily setting it to 94.");
+		     OldLife = 94.;
+	   }  
+	}	  
+    else {
+        alert ("Your efficiency is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+
+// Parse Electricity Consumption	
+    TestVar = isNumberString (form.NewElec_Cons.value)
+    if (TestVar == 1)
+          NewElecCons = form.NewElec_Cons.value;
+    else {
+        alert ("Your annual electricity consumption is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+	
+// Parse New Furnace Cost	
+    TestVar = isNumberString (form.NewFurnace_Cost.value)
+    if (TestVar == 1)
+          NewCost = form.NewFurnace_Cost.value;
+    else {
+        alert ("Your new furnace cost is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+	
+// Parse Sales Tax Rate	
+    TestVar = isNumberString (form.SalesTax_Rate.value)
+    if (TestVar == 1)
+          SalesTaxRate = form.SalesTax_Rate.value;
+    else {
+        alert ("Your sales tax rate is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+// Parse Audit Cost	
+    TestVar = isNumberString (form.EnergyAudit_Cost.value)
+    if (TestVar == 1)
+          AuditCost = form.EnergyAudit_Cost.value;
+    else {
+        alert ("Your energy audit cost is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+	
+// Parse Manufacturer Rebate
+    TestVar = isNumberString (form.Mftr_Rebate.value)
+    if (TestVar == 1)
+          MftrRebate = form.Mftr_Rebate.value;
+    else {
+        alert ("Your manufacture rebate is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+
+// Parse OPA Rebate
+    TestVar = isNumberString (form.OPA_Rebate.value)
+    if (TestVar == 1)
+          OPARebate = form.OPA_Rebate.value;
+    else {
+        alert ("Your OPA rebate is not a number.");
+		ErrCode=ErrCode + 1;
+    }		
+
+// Parse Utility Rebate
+    TestVar = isNumberString (form.Utility_Rebate.value)
+    if (TestVar == 1)
+          UtilityRebate = form.Utility_Rebate.value;
+    else {
+        alert ("Your utility rebate is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+	
+// Parse Federal Rebate
+    TestVar = isNumberString (form.Fed_Rebate.value)
+    if (TestVar == 1)
+          FedRebate = form.Fed_Rebate.value;
+    else {
+        alert ("Your federal rebate is not a number.");
+		ErrCode=ErrCode + 1;
+    }	
+
+// Parse Provincial Rebate
+    TestVar = isNumberString (form.Prov_Rebate.value)
+    if (TestVar == 1)
+          ProvRebate = form.Prov_Rebate.value;
+    else {
+        alert ("Your provincial rebate is not a number.");
+		ErrCode=ErrCode + 1;
+    }
+		
+	if (ErrCode == 0) {
+// Calculate gas consumption in m3 and output it	
+	   OldGasConsumption = OldGasCost/GasPrice ;
+       var OldGasConsString = "0";
+       OldGasConsString = NumtoFormatString(OldGasConsumption);
+       form.OldGas_Consumption.value = OldGasConsString;
+// Calculate gas consumption for heat in m3 and output it	
+	   OldGasHeatConsumption = OldGasConsumption*OldGasHeatPercent/100. ;
+       var OldGasHeatConsString = "0";
+       OldGasHeatConsString = NumtoFormatString(OldGasHeatConsumption);
+       form.OldGasHeat_Consumption.value = OldGasHeatConsString;
+// Calculate energy consumption for the old furnace	and output it	   
+	   OldEnergyCons = OldGasHeatConsumption * 37.5;
+	   var OldEnergyString = "0";
+	   OldEnergyString = NumtoFormatString(OldEnergyCons);
+	   form.OldHeat_Consumption.value = OldEnergyString;
+// Calculate operating cost for old furnace and output it
+	   OldOpCost = OldGasCost*OldGasHeatPercent/100. + OldElecCons * ElecPrice;
+	   var OldOpCostString = "0";
+	   OldOpCostString = NumtoFormatString(OldOpCost);
+	   form.OldOp_Cost.value = OldOpCostString;
+// Calculate the GHG Emissions for the old furnace and output it
+           OldGHGEmissions = OldEnergyCons * GasGHGFactor + OldElecCons * ElecGHGFactor;
+	   var OldGHGString = "0";
+	   OldGHGString = NumtoFormatString(OldGHGEmissions);
+	   form.OldGHG_Emit.value = OldGHGString;
+// Calculate remaining life of old furnace and output it
+       OldRemaining = OldLife - OldAge;
+	   if (OldRemaining < 1) OldRemaining = 1;
+	   var OldRemainingString = "1";
+	   OldRemainingString = NumtoFormatString(OldRemaining);
+	   form.Old_Remain.value = OldRemainingString;
+// Calculate depreciated value of furnace and output it
+       MARRPercent = MARRval / 100.;
+	   Depreciated = OldCost * OldRemaining / OldLife;
+	   var OldDepreciatedString = "1,000";
+	   OldDepreciatedString = NumtoFormatString(Depreciated);
+	   form.Old_Depreciated.value = OldDepreciatedString;
+// Calculate the energy consumption of the new furnace and output it
+       OldEffPercent = OldEff / 100.;
+       NewEffPercent = NewEff / 100.;
+       NewEnergyCons = OldEnergyCons * OldEffPercent / NewEffPercent;
+       var NewEnergyString = "1,000";
+       NewEnergyString = NumtoFormatString(NewEnergyCons);
+       form.NewHeat_Consumption.value = NewEnergyString;  
+// Calculate the natural gas consumption and output it
+	   NewGasCons = NewEnergyCons / 37.5;
+	   var NewGasString = "0";
+	   NewGasString = NumtoFormatString(NewGasCons);
+	   form.Gas_Consumption.value = NewGasString;
+// Calculate operating cost for new furnace and output it
+	   NewOpCost = NewGasCons*GasPrice + NewElecCons * ElecPrice;
+	   var NewOpCostString = "0";
+	   NewOpCostString = NumtoFormatString(NewOpCost);
+	   form.NewOp_Cost.value = NewOpCostString;
+// Calculate the GHG Emissions for the new furnace and output it
+           NewGHGEmissions = NewEnergyCons * GasGHGFactor + NewElecCons * ElecGHGFactor;
+	   var NewGHGString = "0";
+	   NewGHGString = NumtoFormatString(NewGHGEmissions);
+	   form.NewGHG_Emit.value = NewGHGString;
+// Calculate the GHG Emission savings and output it
+	   GHGSavings = OldGHGEmissions - NewGHGEmissions;
+ 	   var GHGSavingsString = "0";
+	   GHGSavingsString = NumtoFormatString(GHGSavings);
+	   form.GHG_Savings.value = GHGSavingsString;
+// Calculate sales tax on the new furnace and output it
+       SalesTaxPercent = SalesTaxRate/100.;
+	   SalesTaxCost = NewCost*SalesTaxPercent;
+	   var SalesTaxString = "0";
+	   SalesTaxString = NumtoFormatString(SalesTaxCost);
+	   form.SalesTax_Cost.value = SalesTaxString;	 
+// Calculate total capital cost the new furnace and output it
+	   NewCapCost = NewCost*1.+SalesTaxCost*1.;
+	   var NewCapString = "0";
+	   NewCapString = NumtoFormatString(NewCapCost);
+	   form.NewCap_Cost.value = NewCapString;	
+// Calculate total rebates on the new furnace and output it
+	   TotalRebates = MftrRebate*1. + OPARebate*1. + UtilityRebate*1. + FedRebate*1. + ProvRebate*1.;
+	   var TotRebateString = "0";
+	   TotRebateString = NumtoFormatString(TotalRebates);
+	   form.Total_Rebates.value = TotRebateString;		
+// Calculate total cost to consumer of the new furnace and output it
+	   TotalConsumerCost = NewCapCost*1. + AuditCost*1.- TotalRebates*1.;
+	   var TotConsCostString = "0";
+	   TotConsCostString = NumtoFormatString(TotalConsumerCost);
+	   form.Total_ConsCost.value = TotConsCostString;	   
+// Calculate amount you could recover in house sale price and output it
+	   RecoverableCost = (NewCapCost*1. - Depreciated*1.) * 0.5;
+	   var RecCostString = "0";
+	   RecCostString = NumtoFormatString(RecoverableCost);
+	   form.Recoverable_Cost.value = RecCostString;		        
+// Calculate payback before rebates and after and output them
+       EnergyCostSavings = OldOpCost - NewOpCost;
+	   if (EnergyCostSavings == 0) {
+	      alert("Energy savings are zero. Did you make an input error?");
+		  ErrCode = ErrCode + 1;
+	   }
+	   else	{  
+	      InitialPayback = NewCapCost/EnergyCostSavings;
+		  FinalPayback = TotalConsumerCost/EnergyCostSavings;
+	   }	  
+	   var InitialPaybackString = "0";
+	   InitialPaybackString = NumtoFormatString(InitialPayback);
+	   form.Initial_Payback.value = InitialPaybackString;	
+	   var FinalPaybackString = "0";
+	   FinalPaybackString = NumtoFormatString(FinalPayback);
+	   form.Final_Payback.value = FinalPaybackString;	
+// Calculate life cycle cost of the new furnace
+       LifetimeFactor = Math.pow((1 + MARRPercent),TimeHorizon);
+	   if ((LifetimeFactor == 0) || (MARRPercent == 0)) {
+	      alert("An error has occurred in calculating life cycle cost.");
+		  ErrCode = ErrCode + 1;
+	   }  
+	   else 
+	      NewPresentValue = TotalConsumerCost + NewOpCost * (1. - 1./LifetimeFactor)/MARRPercent - RecoverableCost/LifetimeFactor;
+	   var NewPresentString = "0";
+	   NewPresentString = NumtoFormatString(NewPresentValue);
+	   form.NewPresent_Value.value = NewPresentString;	
+// Calculate life cycle cost of the old furnace
+       if ((LifetimeFactor != 0) && (MARRPercent != 0)) {
+	      if (TimeHorizon <= OldRemaining) 
+	         OldPresentValue = OldOpCost * (1. - 1./LifetimeFactor)/MARRPercent;
+	      else {
+	         PreLifeFactor = Math.pow((1 + MARRPercent),OldRemaining);
+			 PostLifeFactor = Math.pow((1 + MARRPercent),TimeHorizon - OldRemaining);
+			 if ((PreLifeFactor == 0) || (PostLifeFactor == 0)) {
+			 	 alert("An error has occurred in calculating life cycle cost.");
+		         ErrCode = ErrCode + 1;
+		     }
+			 else {
+			     OldPresentValue = OldOpCost * (1. - 1./PreLifeFactor)/MARRPercent + (TotalConsumerCost + NewOpCost * (1. - 1./PostLifeFactor)/MARRPercent)/PreLifeFactor;
+			 }
+	      }	  
+	   }	  
+	   var OldPresentString = "0";
+	   OldPresentString = NumtoFormatString(OldPresentValue);
+	   form.OldPresent_Value.value = OldPresentString;		
+
+// Decide whether or not to replace the furnace
+       SigDiffFactor = 1. + SigDiff/100.;
+	   var DecisionString = "Do nothing";
+       if (OldPresentValue > NewPresentValue*SigDiffFactor)  	   
+	      DecisionString = "Replace furnace.";
+	   else if (NewPresentValue > OldPresentValue*SigDiffFactor)
+	      DecisionString = "Keep furnace.";
+	   else
+	      DecisionString = "Financial analysis is less than your minimum difference to make a decision. Decide based on non-financial factors.";
+       form.Decision_String.value = DecisionString;		      	   
+	   
+// Say you successfully completed the program	   
+	   alert ("Calculation completed successfully!");
+    }
+    else
+       alert ("This many input errors: " + ErrCode);
+}
+
+function isNumberString (InString)  {
+    if(InString.length==0) return (false);
+    var RefString="1234567890.-";
+    for (Count=0; Count < InString.length; Count++)  {
+        TempChar= InString.substring (Count, Count+1);
+        if (RefString.indexOf (TempChar, 0)==-1)  
+            return (false);
+    }
+    return (true);
+}
+
+function NumtoFormatString (InNum)  {
+    var StringBuild = "";
+    var WorkingNum = InNum;   
+    if (WorkingNum < 0.) {
+       StringBuild = "-";
+       WorkingNum = -WorkingNum;
+    }
+    WorkingNum = Math.floor(WorkingNum+0.5);
+    if (WorkingNum < 1000.)
+       StringBuild = StringBuild + WorkingNum;
+    else {
+       var OverThousand = Math.floor(WorkingNum/1000);
+       var UnderThousand = WorkingNum - OverThousand*1000;
+       StringBuild = StringBuild + OverThousand + ",";
+	   if (UnderThousand > 99)
+	      StringBuild = StringBuild + UnderThousand;
+	   else if (UnderThousand > 9)
+	      StringBuild = StringBuild + "0" + UnderThousand;
+	   else if (UnderThousand > 0)
+	      StringBuild = StringBuild + "00" + UnderThousand;
+	   else
+	      StringBuild = StringBuild + "000";
+	      
+    }
+    return (StringBuild);
+}
+</SCRIPT>
+</HEAD>
+<BODY BGCOLOR="#ffffff" >
+<H1>Furnace Replacement Analysis</H1>
+<FORM NAME="furnaceform">
+  <P>By popular demand, I have been asked to make a page that helps people calculate 
+    the financial numbers for replacing an older gas furnace with a new one. You 
+    can play with the numbers to see how your situation would work out, as long 
+    as your basic scenario is the same.</P>
+
+  <Table style="width:1000px" border=1>
+    <TR VALIGN="MIDDLE"> 
+      <TD COLSPAN=4 style="width:60%"> 
+        <H2>Financial Data</H2>
+      </TD>
+      <TD style="width:40%"> 
+        <H2>Comments:</H2>
+      </TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Gas rate</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Gas_Price" VALUE="0.46">
+      </TD>
+      <TD style="width:10%">/m3</TD>
+      <TD style="width:40%">Get from fuel bills</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Electricity rate</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Elec_Price" VALUE="0.10">
+      </TD>
+      <TD style="width:10%">/kWh</TD>
+      <TD style="width:40%">Get from power bills</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Minimum Acceptable Rate of Return (MARR)</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="MARR" VALUE="5.00">
+      </TD>
+      <TD style="width:10%">%</TD>
+      <TD style="width:40%">This is the rate of return you insist on for your 
+        money (in our household, it's our mortgage rate, since any "extra" money 
+        we have gets plopped in our open mortgage)</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Time horizon</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Horizon" VALUE="5">
+      </TD>
+      <TD style="width:10%">years</TD>
+      <TD style="width:40%">How long do you expect to be in the house?</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Minimum difference to make a decision</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Difference" VALUE="1">
+      </TD>
+      <TD style="width:10%">%</TD>
+      <TD style="width:40%">Within this percentage, you would consider the decision 
+        a wash financially (which is different from taking a bath financially).</TD>
+    </TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD COLSPAN=5 style="width:100%"> 
+        <H2>Data on Current Furnace</H2>
+      </TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual cost of gas</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="OldGas_Cost" VALUE="1200">
+      </TD>
+      <TD style="width:10%">/year</TD>
+      <TD style="width:40%">From gas bills for the year.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual gas consumption</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="OldGas_Consumption" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">m3/year</TD>
+      <TD style="width:40%">From billed gas cost divided by rate</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Percentage of gas used for heat</TD>
+      <TD style="width:5%" ALIGN="RIGHT"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="OldGas_Percent" VALUE="100">
+      </TD>
+      <TD style="width:10%">%</TD>
+      <TD style="width:40%">If you use gas only for heat, enter 100%. If you also 
+        use gas for heating water, it will be closer to 75%. If you also use it 
+        for a dryer or range, lower it a bit more.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual gas consumption for heat</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="OldGasHeat_Consumption" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">m3/year</TD>
+      <TD style="width:40%">From previous calculation and gas heat percentage</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual heating energy consumption</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="OldHeat_Consumption" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">MJ/year</TD>
+      <TD style="width:40%">From gas consumption times 37.5 MJ/m3</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual furnace fan electricity consumption</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Elec_Cons" VALUE="800">
+      </TD>
+      <TD style="width:10%">kWh/year</TD>
+      <TD style="width:40%">Estimated from Dave's experience.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual GHG Emissions</TD>
+      <TD style="width:5%" ALIGN="RIGHT"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="OldGHG_Emit" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">kg CO2e/year</TD>
+      <TD style="width:40%">Based on 0.04968 kg CO2e/MJ energy from gas and 0.236 
+        kg CO2e/kWh energy from electricity</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual operating cost</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="OldOp_Cost" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">/year</TD>
+      <TD style="width:40%">Calculated from above inputs</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Assumed efficiency</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Old_Eff" VALUE="83">
+      </TD>
+      <TD style="width:10%">%</TD>
+      <TD style="width:40%">Estimated based on furnace type and energy auditor 
+        opinion.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Assumed life expectancy</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Old_Life" VALUE="18">
+      </TD>
+      <TD style="width:10%">years</TD>
+      <TD style="width:40%">Estimated based on Dave's experience.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Current age of furnace</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Old_Age" VALUE="6">
+      </TD>
+      <TD style="width:10%">years</TD>
+      <TD style="width:40%">Name plate data.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Remaining furnace life</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Old_Remain" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">years</TD>
+      <TD style="width:40%">Calculated from above inputs</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Original cost of furnace</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Old_Cost" VALUE="2000">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Estimated based on furnace type.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Depreciated value of furnace now</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Old_Depreciated" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Based on straight line depreciation.</TD>
+    </TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD COLSPAN=5  style="width:100%"> 
+        <H2>Data on New Furnace</H2>
+      </TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Assumed efficiency</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="New_Eff" VALUE="94">
+      </TD>
+      <TD style="width:10%">%</TD>
+      <TD style="width:40%">Based on quotes.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual heating energy consumption</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="NewHeat_Consumption" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">MJ/year</TD>
+      <TD style="width:40%">From old heat consumption and the two efficiencies</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual natural gas consumption</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Gas_Consumption" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">m3/year</TD>
+      <TD style="width:40%">Based on 37.5 MJ/m3 of gas</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual furnace fan electricity consumption</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="NewElec_Cons" VALUE="400">
+      </TD>
+      <TD style="width:10%">kWh/year</TD>
+      <TD style="width:40%">Estimated from quotes.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual GHG Emissions</TD>
+      <TD style="width:5%" ALIGN="RIGHT"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="NewGHG_Emit" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">kg CO2e/year</TD>
+      <TD style="width:40%">Based on 0.04968 kg CO2e/MJ energy from gas and 0.236 
+        kg CO2e/kWh energy from electricity</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Annual operating cost</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="NewOp_Cost" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">/year</TD>
+      <TD style="width:40%">Calculated from above inputs</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Purchase price for new furnace (installed)</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="NewFurnace_Cost" VALUE="4640">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">From quotes.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Sales tax rate</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="SalesTax_Rate" VALUE="6">
+      </TD>
+      <TD style="width:10%">%</TD>
+      <TD style="width:40%">In Ontario, GST applies, but not PST.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Sales tax</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="SalesTax_Cost" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Based on sales tax rate above</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Total capital cost</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="NewCap_Cost" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Adding the figures above</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Energy audit cost</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="EnergyAudit_Cost" VALUE="221">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Cost reduced by a $150 rebate available for energy 
+        audits.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Manufacturer rebate</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Mftr_Rebate" VALUE="250">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">From quote.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">OPA rebate</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="OPA_Rebate" VALUE="300">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">For variable speed ECM motor and programmable thermostat.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Utility rebate</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Utility_Rebate" VALUE="115">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">From Enbridge, for switching to high efficiency gas 
+        and for the thermostat.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Federal rebate</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Fed_Rebate" VALUE="500">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">From NRCan, for high efficiency gas, based on the 
+        energy audit.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Provincial rebate</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="text" NAME="Prov_Rebate" VALUE="500">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Matches the NRCan grant based on the audit.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Total rebates</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Total_Rebates" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Adding the figures above</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Total cost to the consumer</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Total_ConsCost" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Add capital cost and audit cost and subtract rebates</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Expected recovery of furnace improvement in house 
+        sale</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Recoverable_Cost" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Realtor association estimates 50-80% of the heating 
+        system improvement can be recovered in a subsequent house sale. This calculation 
+        assumes 50% recovery.</TD>
+    </TR>
+    <TR VALIGN="TOP">
+      <TD colspan=5  style="width:100%">
+        <INPUT TYPE="button" NAME="Submit_Button" Value="Calculate" onClick="testResults(this.form)" style="font-size:20px;color:red">
+      </TD>
+    </TR>
+    <TR VALIGN="MIDDLE"> 
+      <TD COLSPAN=5  style="width:100%"> 
+        <H2>Results</H2>
+      </TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Payback without rebates</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Initial_Payback" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">years</TD>
+      <TD style="width:40%">Calculated from the capital cost and the annual energy 
+        savings.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Payback with rebates</TD>
+      <TD style="width:5%"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="Final_Payback" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">years</TD>
+      <TD style="width:40%">Calculated from the total cost to the consumer and 
+        the annual energy savings.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Life cycle cost of old furnace</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="OldPresent_Value" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Total cost of owning and operating the old furnace, 
+        assuming that if its expected life is shorter than our time horizon we 
+        would replace it with the gas furnace when it dies.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">Life cycle cost of new furnace</TD>
+      <TD style="width:5%" ALIGN="RIGHT">$</TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="NewPresent_Value" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%"></TD>
+      <TD style="width:40%">Total cost of owning and operating the new furnace, 
+        assuming we sell the house at the end of the time horizon and recover 
+        50% of the added value.</TD>
+    </TR>
+    <TR VALIGN="TOP"> 
+      <TD style="width:35%">GHG Emissions Savings</TD>
+      <TD style="width:5%" ALIGN="RIGHT"></TD>
+      <TD style="width:10%"> 
+        <INPUT TYPE="TEXT" SIZE="40" NAME="GHG_Savings" style="border:none;font-size:14px;" value="">
+      </TD>
+      <TD style="width:10%">kg CO2e/year</TD>
+      <TD style="width:40%">Based on above calculations.</TD>
+    </TR>
+  </TABLE>
+
+<H2>Conclusion</H2>
+
+<H1><INPUT TYPE="TEXT" SIZE="200" NAME="Decision_String" style="border:none;font-size:20px;color:red;word-wrap:break-word" value=""></H1>
+
+
+</FORM>
+<p> 
+<hr>
+<a href="index.html"><img src="house.gif" align=middle> Home</a> <br>
+<hr>
+<address> Last Updated: 23 Oct 2022<br>
+WebMaster: Dave Shipley, <a href="mailto:urbship@urbship.ca">urbship@urbship.ca</a><br>
+&copy; copyright 2007-2022 David F. Shipley</address>
+</BODY>
+</HTML>
+
