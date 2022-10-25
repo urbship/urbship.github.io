@@ -1,0 +1,171 @@
+
+<HTML>
+<HEAD>
+
+  <TITLE>Investing Canto 16</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+      
+<H1> Canto 16</H1>
+
+      
+<h3>Bank of Dad has Written a Piece of Software</h3>
+      
+<p>The Bank of Dad has written a piece of software with the working title of &quot;Investment 
+  Analyzer&quot;. It is going to be posted as a zip file you can download and 
+  try out. It is currently only a beta version, so is being distributed as freeware. 
+  You can download and try it, but please let me know if you do. The email address 
+  is below. Please do not distribute it to others without asking them to contact 
+  me and let me know they have it. 
+<p>I am looking for feedback so I can make improvements to it. If it seems like 
+  something people will want, I'll change it to a shareware product and start 
+  charging people something like $5. Or a beer. Or a chocolate truffle. Or an 
+  extra $5 donation to your favourite charity while thinking fondly of the Bank 
+  of Dad. 
+<p>The Investment Analyzer has two functions. a) It can analyze a group of funds 
+  and their returns history and develop a set of optimized mixtures with the lowest 
+  year-to-year variability for a given average rate of return. b) It can analyze 
+  a portfolio of investments and a range of retirement expenditure plans and estimate 
+  the probability the investor will outlive his/her money.
+<h4>Mixture Optimization</h4>
+<p>When I started investing, I learned that asset allocation and diversification 
+  were important parts of investing success, but that there was something called 
+  &quot;false diversification&quot; that could trip up an investor. False diversification 
+  is where you split your money between two funds that basically behave the same 
+  way. You think you are lowering your risk by spreading your money between different 
+  things, but actually you are making no difference at all. I wanted to be able 
+  to estimate, based on past results, which of my funds went in different directions 
+  from each other and would therefore provide me with useful diversification.
+<p>In 1996 I wrote a little piece of code in Pascal, to grind through my collection 
+  of mutual funds and try to figure out the best allocation between them for the 
+  average rate of return I wanted. I ran it on my computer at work, which was 
+  faster than anything we had at home, and it often had to run overnight. Since 
+  then I have re-written it twice, because of various computer upgrades, and each 
+  time I added more features. The computer I run it on now is over 1000 times 
+  as fast as the one in 1996, so it can consider a lot more fund combinations 
+  a lot more quickly as it develops its optimized mixtures.
+<p>To use it you assemble a little text input file (which you can build in a spreadsheet 
+  and export to comma-separated text if you want), with information on the funds 
+  you want it to work with, the range of years for which you have returns, and 
+  the total return for each year for each fund. You can also specify a couple 
+  of target levels of return and standard deviation, like for a low-risk portfolio 
+  and a medium-risk portfolio. You can specify the &quot;step sizes&quot; the 
+  program will use to mix the funds together. For example, if you specify a step 
+  size of 100%, the program will compare only portfolios that consist entirely 
+  of one of the funds. If you use a step size of 50%, the program will compare 
+  all the portfolios with everything in one fund and also all the portfolios split 
+  evenly between two of them. It can use step sizes of 100%, 50%, 25%, 20%, 10%, 
+  5%, 4%, 2%, and 1%. If you specify that it should start with a step size of 
+  100% and move through to a step size of 1%, it will run a pass at every step 
+  size in between and each time will use the information it gains to narrow down 
+  the choices it needs to consider in the next pass. 
+<p>Each time it looks at a portfolio mixture, it figures out the total return 
+  for each year for the mixture. From that, it calculates the average annual return 
+  and the standard deviation of the returns. Then it tries to store these results 
+  in a bin for the best portfolio with approximately this rate of return. If this 
+  is the first portfolio with this rate of return, the program plops it in that 
+  bin. If there is already a portfolio stored in that bin, the program compares 
+  the standard deviations. If the new one has a lower standard deviation, it replaces 
+  the portfolio that was already stored in the bin. Otherwise, the program moves 
+  on to the next mixture. 
+<p>At the end, it can draw a chart that shows the best standard deviation available 
+  for each rate of return, and the fund mixture that produced that standard deviation. 
+  You can pick a place on the chart that represents the rate of return/standard 
+  deviation you want and read off the mixture of funds that would have produced 
+  thos results based on the returns history. Of course, past performance does 
+  not predict future results. You don't know what the market conditions will be 
+  going forward, so you can't predict which of your funds will do well. But the 
+  relationship between them, in terms of which ones go up when another one goes 
+  down, is probably more predictable. 
+<h4>Outliving Your Money</h4>
+<p>Over the years I've used spreadsheets to track our investments and often done 
+  some kind of simple calculation in the spreadsheet to forecast whether our funds 
+  would grow enough to pay for our retirement. A few years ago, I wrote a VBA 
+  macro that would cycle through a range of retirement ages and a few different 
+  retirement spending levels and, for each combination, estimate the probability 
+  that we would outlive our money. It used the average return and standard deviation 
+  for the overall portfolio to generate the return for each year, combined that 
+  with the planned contribution or withdrawal, and repeated this for each year 
+  until our estimated year of expiry. Then it repeated that whole process 999 
+  more times, tallied up the results and calculated the percentage of time we 
+  ran out of money in 1000 trials. Then it repeated the same process for the next 
+  combination of retirement age and retirement spending level. This is called 
+  stochastic simulation, or the Monte Carlo approach.
+<p>I have now rewritten this and added it to the same program as the mixture optimization 
+  system. To use it, you again assemble a little text input file (again, you can 
+  do that in a spreadsheet and export it to comma-separated text if you want), 
+  with information on the investments you have in your portfolio and their historical 
+  returns, how much you plan to contribute each year until you retire, the pensions 
+  you expect to get from company or government sources and when you will start 
+  getting them, when you plan to retire, what you think your spending pattern 
+  might be in retirement, the inflation rate, the tax rate you expect to pay in 
+  retirement, and so on. Then it runs through 1000 trials for each scenario and 
+  reports the results in a chart. It runs about 1200 times as fast as it does 
+  in the spreadsheet macro, so if you want to use more trials you can do so. 1000 
+  seems adequate for me.
+<p>Because my parents are already retired and I wanted to be able to assess their 
+  situation, I added the capability of running the stochastic model for someone 
+  who is already retired. It works the same way, but instead of a range of retirement 
+  ages to consider, you enter the range of ages you might live to, to test the 
+  probability of running out of money before that age.
+<p>There are various on-line programs for doing something very similar to this. 
+  They allow you to experiment with various things, such as when you start your 
+  Canada Pension Plan or Old Age Security payments (the monthly payment for each 
+  of those is higher if you delay starting it after the &quot;normal&quot; retirement 
+  age), what age you will retire, how much you plan to contribute, how much you 
+  think you might spend in retirement, and how long you think you might live. 
+  There were always aspects of my situation that didn't fit into the on-line calculators, 
+  so I wrote my own. For example, we have retirement accounts we established when 
+  we lived in the US, and other ones we set up after we moved to Canada. None 
+  of the on-line calculators allow you to enter information in two different currencies. 
+  My tool does that. It also doesn't limit how many pensions you enter, so if 
+  you expect to get CPP and OAS and a company pension, but also Social Security 
+  (in US$), you can enter all of that. You can specify whether pensions are taxable 
+  or not, whether they are indexed to inflation, and so on. Basically, I built 
+  the tool I needed myself, and I'm hoping it might be useful to others. 
+<h4>If you Download the Software, What do You Get?</h4>
+<p>The file is posted as a zip file, which you download and then unzip. To install 
+  it, you run the setup.exe and it should install as an application called Investment 
+  Analyzer. It runs in Windows, so if you are an Apple user you would have to 
+  run some kind of Windows emulator to use it. I'm not sure how old a version 
+  of Windows it will work on. I'm using Windows 10 and haven't tried it on anything 
+  else.
+<p>There is also a Word file with instructions on how the input files work. It 
+  lists all the possible KEYWORD options a line of data can start with, and what 
+  the program is expecting to see after each KEYWORD. 
+<p>There is a directory of sample input files. You can try running them. They 
+  only thing I know of that won't work is saving the results to an output file. 
+  The input file currently has a nonsensical entry for the folder where you want 
+  the output file to go, so it will probably throw an error. You can edit the 
+  file and change the output directory to a directory that exists on your computer 
+  and then it should work.
+<p>When you decide to enter your own data, I recommend you start with one of the 
+  sample input files that is closest to the scenario you want to run and make 
+  changes to it. That will be easier than starting from scratch.
+<h4>The Download</h4>
+<p>Here is the file: <a href="Investment Analyzer Install Folder.zip"> 
+  Investment Analyzer Install Folder.zip </a>
+<h4>Feedback</h4>
+<p>This software is being distributed as a freeware beta version at the moment. 
+  If you download it, please send me a note at the email below to tell me that 
+  you did so. If you pass it on to someone else, please ask them to email me and 
+  let me know they have it.
+<p>I would like feedback on it so I can make it better. In the long run, if people 
+  find it useful, I'd like to make it a shareware and ask for some nominal payment 
+  from people who like it. 
+<HR>
+<P>&nbsp;
+<A HREF="investing.html"><IMG SRC="money%20tree.jpeg" ALIGN=middle HEIGHT="40"> 
+  Investing Table of Contents </A>
+<P>&nbsp; <A HREF="investing%20canto%2015.html"><IMG SRC="color_le.gif" ALIGN=middle> 
+  To Previous Canto </a> 
+<P>&nbsp; 
+<A HREF="../index.html"><IMG SRC="../house.gif" ALIGN=middle> Home </A> 
+<HR>
+<ADDRESS> Last Updated: 25 Oct 2022<BR>
+  WebMaster: Dave Shipley
+  &nbsp;<A HREF="mailto:urbship@urbship.ca">urbship@urbship.ca</A><BR>
+&copy; copyright 2017-2022 David Urban Shipley </ADDRESS>
+</BODY></HTML>
+
