@@ -1,0 +1,144 @@
+<HTML>
+<HEAD>
+  <META NAME="AUTHOR" CONTENT="David F. Shipley">
+  <META NAME="GENERATOR" CONTENT="Internet Assistant for Microsoft Word 2.0z">
+  <TITLE>Launchpad</TITLE>
+    <script language="JavaScript">
+  timeJuly = 962427600000;
+  timenow = new Date();
+  timeleft = (timeJuly - timenow)/(1000 * 3600 * 24);
+  daysleft = Math.floor(timeleft);
+  weeksleft = Math.floor(daysleft/7);
+  workdays = (weeksleft*3.5);
+  rworkdays = (weeksleft*2.5);
+  dayofweek = timenow.getDay();
+  if (dayofweek == 0 | dayofweek == 6) {
+    workdays = workdays + 3.5;
+    rworkdays = rworkdays + 2.5;
+	}
+  if (dayofweek == 1) {
+    workdays = workdays + 2.5;
+    rworkdays = rworkdays + 2;
+    }
+  if (dayofweek == 2) {
+    workdays = workdays + 1.5;
+    rworkdays = rworkdays + 2;
+    }
+  if (dayofweek == 3) {
+    workdays = workdays + 1;
+    rworkdays = rworkdays + 1;
+    }
+  if (dayofweek ==4) {
+    workdays = workdays + 1;
+    }
+  wholedays = Math.floor(workdays);
+  rwholedays = Math.floor(rworkdays);
+  if (wholedays > 0) {  
+    document.write(wholedays + " Breeding Sows");
+    }
+  hournow = timenow.getHours() + timenow.getMinutes()/60;
+  if (hournow < 8) {
+    hournow = 8;
+    }
+  if (hournow <13) {
+    hournow = hournow + 1;
+    }
+  if (dayofweek == 3) {
+    hournow = hournow + 4;
+	}
+  rhournow = hournow;
+  if (dayofweek == 0 | dayofweek == 5 | dayofweek == 6) {
+    hournow = 17;
+    }
+  if (dayofweek == 0 | dayofweek == 1 | dayofweek == 3 | dayofweek == 6) {
+    rhournow = 17;
+    }
+  workhours = Math.floor((workdays * 8) + Math.max(0,(17-hournow)));
+  rworkhours = Math.floor((rworkdays * 8) + Math.max(0,(17-rhournow)));
+  if (workhours > 0) {
+    document.write("<BR>"+ workhours + " Lovely Piglets");
+	}
+  if (rwholedays > 0) {
+    document.write("<BR>"+ rwholedays + " Pretty White Ducks");
+    }
+  if (rworkhours > 0) {
+  document.write("<BR>"+ rworkhours + " Cute Little Ducklings");
+	}
+ function local_timezone() {var temp = (new Date()).getTimezoneOffset();temp = temp / 60;temp = 8 - temp;temp = temp * 60 * 60 * 1000;return temp;}
+
+
+ </script>
+</HEAD>
+<BODY onload="startsayingbyebyeBush()">
+<H1>
+  Welcome to Dave's Launchpad
+</H1>
+<TABLE><TR valign="top">
+    <TD> <A HREF="pigs.au"> <IMG SRC="pudu.gif" ALT="Dave" HEIGHT=500 ></A> </td>
+<TD>
+<H4>Key pages you always want to go to:</H4>
+<Table>
+<TR align="top">
+<TD>Work-oriented:
+            <UL>
+
+              <LI><A HREF="http://webmail.magma.ca/">Magma E-mail Server</A> 
+
+              <LI><A HREF="https://tc0709.ashraetcs.org/">Posted 7.9 New 
+                Website</A> 
+
+              <LI><A HREF="http://spc207.ashraepcs.org/">Posted SPC 207 Website</A>
+              <LI><A HREF="http://sage-geds.tpsgc-pwgsc.gc.ca/cgi-bin/direct500/eng/TE?FN=index.htm">Government 
+                Employee Directory</A> 
+
+			  <LI><A HREF="http://www.linkedin.com/">Linked In</A></LI>
+              <LI><A HREF="http://www.google.com/intl/xx-elmer/">Google</A> </LI>
+             
+            </UL>
+	  </TD>
+<TD>Non-work:
+            <UL>
+              <LI><A HREF="http://www.publicradiofan.com/cgi-bin/whatson.pl">Public 
+                Radio</A> 
+              <LI><a href="http://www.bbc.co.uk/worldservice/">BBC</a> 
+              <LI><A HREF="https://biblioottawalibrary.ca/en">Ottawa 
+                Public Library</A> 
+              <LI> <A HREF="comics.htm">My collection of comic strip links</A> 
+                        <LI> <A HREF="http://www.urbship.ca/family/index.html">Posted 
+                Version Urban Shipley Family Page</A> 
+              <LI><A HREF="http://www.facebook.com/">Facebook</A>
+              <LI> <A HREF="http://www.theweathernetwork.com/weather/caon0512/k1v6n6/E1788939">Ottawa 
+                Weather</A> 
+              <LI> <A HREF="http://www.theglobeandmail.com/">The Globe and Mail</A>
+              <LI> <A HREF="https://www.theguardian.com/uk">The Guardian</A>
+              <LI><A HREF="https://www.cbc.ca/listen/live-radio?radio_one=ottawa&cbc_music=toronto">CBC Radio Ottawa Popup</A> 
+              <LI><a href="http://www.dailykos.com">Kos</a> 
+              <LI><a href="http://www.electoral-vote.com/">Electoral Vote</a> 
+              <LI><a href="http://www.cnn.com">CNN</a> 
+            
+
+               <LI><A HREF="http://en.wikipedia.org/wiki/Special:Randompage">Learn Something New Every Day</A>
+            </UL>
+	  </TD>
+	  </TR>
+	  </TABLE>
+     </TD>
+  </TR>
+</TABLE>
+<HR>
+
+<ADDRESS>
+  Last Updated:
+    <script language="JavaScript">
+
+  timenow = new Date();
+
+  document.write(timenow);
+</script>
+<BR>
+
+  WebMaster: Dave Shipley
+  <A HREF="mailto:dave@urbship.ca">dave@urbship.ca</A> <BR>
+  &copy; Copyright 1995-2022 David Urban Shipley<BR>
+</ADDRESS>
+</BODY></HTML>
